@@ -1,0 +1,39 @@
+=============
+Browser tests
+=============
+
+    >>> from zope import interface, component, event
+    >>> from zope.testbrowser.testing import Browser
+    >>> from zope.lifecycleevent import ObjectCreatedEvent
+    >>> from zope.lifecycleevent import ObjectModifiedEvent
+    >>> from z3c.jsonrpc.testing import JSONRPCTestProxy
+    >>> from zojax.content.jsonrpc import interfaces
+    >>> from zojax.content.jsonrpc.tests.content import Content2, Content1
+
+    >>> root = getRootFolder()
+
+    >>> content11 = root['content11']
+    >>> content12 = root['content12']
+    >>> content21 = root['content21']
+    >>> content22 = root['content22']
+
+    >>> siteURL = 'http://localhost'
+    >>> proxy = JSONRPCTestProxy(siteURL + '/content11', handleErrors=False)
+    >>> sorted(proxy.get({'title':[]}).items())
+    [(u'title', u'Content 1')]
+
+    >>> sorted(proxy.get({'title':[], 'description': []}).items())
+    [(u'description', u''), (u'title', u'Content 1')]
+
+    >>> proxy.set({'title': 'Changed'})
+
+    >>> sorted(proxy.get({'title':[]}).items())
+    [(u'title', u'Changed')]
+
+Remove content
+--------------
+
+    >>> del root['content21']
+    >>> del root['content22']
+    >>> del root['content11']
+

@@ -1,0 +1,24 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:z3c="http://namespaces.zope.org/z3c"
+   i18n_domain="zojax.content.jsonrpc">
+
+  <z3c:jsonrpc
+     for="zojax.content.type.interfaces.IContent"
+     class=".view.ContentView"
+     permission="zope.Public"
+     methods="get set"
+    />
+
+  <!-- marshaller -->
+  <adapter
+      for=".OOBTreeItems"
+      factory="z3c.json.converter.ListPreMarshaller"
+      />
+
+  <!--   translations-->
+  <i18n:registerTranslations directory="locales" />
+
+</configure>
